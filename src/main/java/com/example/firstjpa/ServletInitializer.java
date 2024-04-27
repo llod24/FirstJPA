@@ -1,4 +1,4 @@
-package com.example.FirstJPA;
+package com.example.firstjpa;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

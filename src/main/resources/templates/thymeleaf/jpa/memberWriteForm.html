@@ -1,26 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>memberWrite</title>
 </head>
 <body>
     <h1>
-        Member Registration Form
+        Member
+        <span th:if="${formTitle} == 'Modification'" th:text="${formTitle}" ><span>
+        <span th:unless="${formTitle} == 'Modification'" th:text="${formTitle}" ><span>
+        Form
     </h1>
 
-    <form action="/jpa/memberWriteOk" method="post" id="memberWriteForm">
+    <!--    form action="/jpa/memberWriteOk" method="post" id="memberWriteForm">-->
+    <!--  memberDTO객체가 비어있지 않으면 각 값을 꺼내서 필드값으로 사용  -->
+    <form th:action="@{/jpa/memberWriteOk}"  th:object="${memberDTO}" method="post" id="memberWriteForm">
+        <!--   hidden으로 num값을 넘겨줌  save메소드가 num값이 들어오면 update 없으면 insert 진행   -->
+        <input type="hidden" name="num" th:field="*{num}">
+
         <label for="name"></label>
-        <input type="text" id="name" name="name">
+        <input type="text" id="name" name="name" th:field="*{name}">
         <br>
         <label for="id"></label>
-        <input type="text" id="id" name="id">
+        <input type="text" id="id" name="id" th:field="*{id}">
         <br>
         <label for="phone"></label>
-        <input type="text" id="phone" name="phone">
+        <input type="text" id="phone" name="phone" th:field="*{phone}">
         <br>
     </form>
 
-    <button type="submit" form="memberWriteForm">회원등록</button>
+<!--    <button type="submit" form="memberWriteForm">회원등록</button>-->
+    <div th:switch="${formTitle}" >
+        <button type="submit" form="memberWriteForm" th:case="Registration">회원등록</button>
+        <button type="submit" form="memberWriteForm" th:case="Modification">회원수정</button>
+
+    </div>
 </body>
 </html>

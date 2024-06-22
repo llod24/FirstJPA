@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>member List</title>
+</head>
+<body>
+
+    <div>
+
+        <h2> Member List</h2>
+        <p> 현재 <span th:text= "${#lists.size(members)}" style="font-weight: bold"></span>명의 회원정보가 등록되었습니다.</p>
+
+        <table border="1">
+            <thead>
+                <tr >
+                    <th width = "50">#</th>
+                    <th width = "Name">Name</th>
+                    <th width = "ID">ID</th>
+                    <th width = "Phone">Phone</th>
+                    <th >수정</th>
+                    <th >삭제</th>
+                </tr>
+            </thead>
+            <tbody>
+    `            <tr th:each="member : ${members}">
+                    <th th:text="${member.num}">#</th>
+                    <th><a href="#" th:href="@{/jpa/memberDetail(num = ${member.num})}" th:text="${member.name}">#</a></th>
+                    <th th:text="${member.id}">#</th>
+                    <th th:text="${member.phone}">#</th>
+                    <th><a href="#" th:href="@{/jpa/memberWriteForm( num = ${member.num} ) }">수정</a></th>
+                    <th><a href="#" th:href="@{/jpa/memberDelete(num=${member.num})}">삭제</a></th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

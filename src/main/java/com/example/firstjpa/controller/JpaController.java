@@ -4,6 +4,8 @@ import com.example.firstjpa.dto.MemberDTO;
 import com.example.firstjpa.entity.Member;
 import com.example.firstjpa.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,14 +72,27 @@ public class JpaController {
     }
 
     @GetMapping(value = "/jpa/memberList")
-    public String memberList(Model model){
+    public String memberList(Model model, Pageable pageable){
 
         // JPA 가 아닌 경우 서비스 계층에서 리스트를 받아오는 식으로 처리
-        List<Member> members = memberRepository.findAll();
+//        List<Member> members = memberRepository.findAll();
+        //JPA방식 + 페이징 --- page, pageable
+
+
+        //page(몇페이지) size(출력될 요소 개수) sort 등의 정보를 파라미터로 넘겨줌
+        //page번호는 0으로 시작 size deafult는 20
+        //view 페이지에 적용할 값을 message.properties 파일에 정의하고 사용가능
+
+        Page<Member> members = memberRepository.findAll(pageable);
 
         model.addAttribute("members", members);
 
-
+        System.out.println(members.getTotalPages()); //총 페이지 리턴 메소드
+        System.out.println(members.getTotalElements()); // 모든 레코드 개수
+        System.out.println(members.getNumber());// 현재 페이지 번호
+        System.out.println(members.getSize());//한페이지에 보여지는 레코드의 개수
+        System.out.println(members.getSort());//정렬되었는지 여부 UNSORTED
+        
 
         return "jpa/memberList";
     }
@@ -106,4 +121,6 @@ public class JpaController {
 
         return "jpa/memberDetail";
     }
+
+
 }

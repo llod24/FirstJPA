@@ -8,4 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 //엔터티 --> 테이블명인 Member와 같게해야
 public interface  MemberRepository extends JpaRepository<Member, Integer> {
 
+
+    
+
 }

@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Main</title>
 </head>
 <body>
     INDEX.HTML00e
+    <!-- <button th:onClick="location.href='/jpa/memberList?page=0&size=2';"> JPA Member List</button> 을 타임리프 문법 적용시켜서-->
+    <!-- 작은따옴표, 큰따옴표 같이사용 -> 백슬래시를 사용해준다 -->
 
-    <button onClick="location.href='/jpa/memberList';"> JPA Member List</button>
+    <button th:onClick="'location.href=\'' +   @{/jpa/memberList(page=0, size=#{paging.size})} + '\';'"> JPA Member List</button>
     <button onClick="location.href='/jpa/memberWriteForm';"> JPA Member Registration</button>
 </body>
 </html>

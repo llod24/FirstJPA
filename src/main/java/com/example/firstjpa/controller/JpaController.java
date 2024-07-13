@@ -72,7 +72,7 @@ public class JpaController {
     }
 
     @GetMapping(value = "/jpa/memberList")
-    public String memberList(Model model, Pageable pageable){
+    public String memberList(Model model, Pageable pageable,@RequestParam(value="searchCate", required = false, defaultValue = "")String searchCate, @RequestParam(value = "searchKeyword", required = false, defaultValue = ""   ) String searchKeyword){
 
         // JPA 가 아닌 경우 서비스 계층에서 리스트를 받아오는 식으로 처리
 //        List<Member> members = memberRepository.findAll();
@@ -82,8 +82,18 @@ public class JpaController {
         //page(몇페이지) size(출력될 요소 개수) sort 등의 정보를 파라미터로 넘겨줌
         //page번호는 0으로 시작 size deafult는 20
         //view 페이지에 적용할 값을 message.properties 파일에 정의하고 사용가능
-
-        Page<Member> members = memberRepository.findAll(pageable);
+        
+        Page<Member> members = null;
+        
+        if(searchCate.equals("id")){
+            members = memberRepository.findByIdContaining(searchKeyword, pageable);
+        } else if (searchCate.equals("name")) {
+            members = memberRepository.findByNameContaining(searchKeyword, pageable);
+        } else if (searchCate.equals("phone")) {
+            members = memberRepository.findByPhoneContaining(searchKeyword, pageable);
+        } else {
+            members = memberRepository.findAll(pageable);
+        }
 
         model.addAttribute("members", members);
 

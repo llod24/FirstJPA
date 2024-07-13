@@ -11,6 +11,18 @@
         <h2> Member List</h2>
         <p> 현재 <span th:text= "${#lists.size(members)}" style="font-weight: bold"></span>명의 회원정보가 등록되었습니다.</p>
 
+        <!-- 검색 폼 시작 -->
+        <form th:action="@{/jpa/memberList}">
+<!--            <label for="searchKeyword">Search</label>-->
+            <select name="searchCate">
+                <option value="name">이름</option>
+                <option value="id">아이디</option>
+                <option value="phone">휴대폰</option>
+
+            </select>
+            <input type="text" id="searchKeyword" name="searchKeyword">
+            <button type="submit">Search</button>
+        </form>
         <table border="1">
             <thead>
                 <tr >
